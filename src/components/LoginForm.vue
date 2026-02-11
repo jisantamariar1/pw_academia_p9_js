@@ -60,6 +60,7 @@ export default {
         if (token) {
           // 2. Guardamos el token en el navegador
           localStorage.setItem('token', token.accessToken);
+          localStorage.setItem('user', this.usuario);
           
           // 3. Emitimos un evento para avisar que ya entramos
           this.$emit('login-exitoso');

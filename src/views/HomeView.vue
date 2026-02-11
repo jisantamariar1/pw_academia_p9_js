@@ -1,18 +1,28 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <WelcomeCard />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+// Comentario arriba de la línea
+// Importamos el componente de bienvenida
+import WelcomeCard from '@/components/WelcomeCard.vue';
 
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
+    WelcomeCard
   }
 }
 </script>
+
+<style scoped>
+.home {
+  min-height: calc(100vh - 80px);
+  background-color: #f0f2f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
