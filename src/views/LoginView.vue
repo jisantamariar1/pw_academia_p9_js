@@ -1,8 +1,8 @@
 <template>
   <div class="login-container">
     <div class="intro">
-      <h1>Sistema Académico</h1>
-      <p>Gestión de Matrículas y Cursos</p>
+      <h1>Academia de Cursos</h1>
+      <p>Gestión de Matrículas, Cursos y Estudiantes</p>
     </div>
     
     <LoginForm @login-exitoso="irAlHome" />
@@ -20,7 +20,7 @@ export default {
   methods: {
     irAlHome() {
       // Redirigir al usuario al Dashboard principal
-      this.$router.push('/');
+      this.$router.push('/estudiantes');
     }
   }
 }

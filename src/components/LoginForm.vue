@@ -8,7 +8,7 @@
         <input 
           type="text" 
           v-model="usuario" 
-          placeholder="Ej: admin"
+          placeholder="Ej: Juan"
           required
         />
       </div>
@@ -18,7 +18,7 @@
         <input 
           type="password" 
           v-model="password" 
-          placeholder="******"
+          placeholder="************"
           required
         />
       </div>
@@ -35,7 +35,6 @@
 </template>
 
 <script>
-// Importamos la fachada que creaste
 import { obtenerTokenFachada } from '@/clients/AutorizacionClient';
 
 export default {
@@ -54,16 +53,17 @@ export default {
       this.error = null;
 
       try {
-        // 1. Llamamos al backend (Puerto 8082)
+        // 1. Llamamos al backend 
         const token = await obtenerTokenFachada(this.usuario, this.password);
         
         if (token) {
-          // 2. Guardamos el token en el navegador
+          // 2. Guardamos el token y el nombre de usuario en el navegador
           localStorage.setItem('token', token.accessToken);
           localStorage.setItem('user', this.usuario);
           
           // 3. Emitimos un evento para avisar que ya entramos
           this.$emit('login-exitoso');
+          
         } else {
           this.error = "Credenciales incorrectas (No llegó el token)";
         }
