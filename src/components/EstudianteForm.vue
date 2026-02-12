@@ -87,10 +87,10 @@ export default {
         if (this.estudianteEdit) {
           // Usamos el ID que viene de la prop para actualizar
           await actualizarFachada(this.estudianteEdit.id, this.estudiante);
-          alert("Estudiante actualizado con éxito");
+          this.$emit('mostrar-alerta', 'Estudiante actualizado con éxito', 'success');
         } else {
           await guardarFachada(this.estudiante);
-          alert("Estudiante guardado con éxito");
+          this.$emit('mostrar-alerta', 'Estudiante guardado con éxito', 'success');
         }
 
         this.$emit('guardado');
@@ -98,7 +98,7 @@ export default {
 
       } catch (error) {
         console.error("Error al procesar estudiante", error);
-        alert("Ocurrió un error al guardar");
+        this.$emit('mostrar-alerta', 'Ocurrió un error al guardar', 'error');
       }
     },
 

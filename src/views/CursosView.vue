@@ -17,7 +17,8 @@
         v-if="mostrarForm" 
         :cursoEdit="cursoSeleccionado" 
         @actualizado="refrescar" 
-        @cancelar="cerrar" 
+        @cancelar="cerrar"
+        @mostrar-alerta="mostrarAlerta"
       />
 
       <CursoList 
@@ -26,22 +27,36 @@
         @eliminar="borrar" 
       />
     </div>
+    
+    <!-- AlertaFlash -->
+    <AlertaFlash
+      :mostrar="alerta.mostrar"
+      :mensaje="alerta.mensaje"
+      :tipo="alerta.tipo"
+      @ocultar="ocultarAlerta"
+    />
   </div>
 </template>
 
 <script>
 import CursoList from '@/components/CursoList.vue';
 import CursoForm from '@/components/CursoForm.vue';
+import AlertaFlash from '@/components/AlertaFlash.vue';
 import { consultarCursosFachada, borrarCursoFachada } from '@/clients/CursoClient.js';
 
 export default {
-  components: { CursoList, CursoForm },
+  components: { CursoList, CursoForm, AlertaFlash },
 
   data() {
     return {
       listaCursos: [],
       mostrarForm: false,
-      cursoSeleccionado: null
+      cursoSeleccionado: null,
+      alerta: {
+        mostrar: false,
+        mensaje: '',
+        tipo: 'success'
+      }
     }
   },
 
@@ -66,10 +81,19 @@ export default {
     },
 
     async borrar(id) {
-      if (confirm("¿Seguro que desea eliminar este curso?")) {
-        await borrarCursoFachada(id);
-        await this.cargar();
-      }
+      await borrarCursoFachada(id);
+      await this.cargar();
+      this.mostrarAlerta('Curso eliminado correctamente', 'success');
+    },
+
+    mostrarAlerta(mensaje, tipo = 'success') {
+      this.alerta.mostrar = true;
+      this.alerta.mensaje = mensaje;
+      this.alerta.tipo = tipo;
+    },
+
+    ocultarAlerta() {
+      this.alerta.mostrar = false;
     },
 
     refrescar() {

@@ -5,22 +5,54 @@
       <p>Gestión de Matrículas, Cursos y Estudiantes</p>
     </div>
     
-    <LoginForm @login-exitoso="irAlHome" />
+    <LoginForm 
+      @login-exitoso="irAlHome" 
+      @mostrar-alerta="mostrarAlerta"
+    />
+    
+    <!-- AlertaFlash -->
+    <AlertaFlash
+      :mostrar="alerta.mostrar"
+      :mensaje="alerta.mensaje"
+      :tipo="alerta.tipo"
+      @ocultar="ocultarAlerta"
+    />
   </div>
 </template>
 
 <script>
 import LoginForm from '@/components/LoginForm.vue';
+import AlertaFlash from '@/components/AlertaFlash.vue';
 
 export default {
   name: 'LoginView',
   components: {
-    LoginForm
+    LoginForm,
+    AlertaFlash
+  },
+  data() {
+    return {
+      alerta: {
+        mostrar: false,
+        mensaje: '',
+        tipo: 'success'
+      }
+    }
   },
   methods: {
     irAlHome() {
       // Redirigir al usuario al Dashboard principal
       this.$router.push('/estudiantes');
+    },
+    
+    mostrarAlerta(mensaje, tipo = 'error') {
+      this.alerta.mostrar = true;
+      this.alerta.mensaje = mensaje;
+      this.alerta.tipo = tipo;
+    },
+    
+    ocultarAlerta() {
+      this.alerta.mostrar = false;
     }
   }
 }

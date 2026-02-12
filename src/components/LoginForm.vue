@@ -66,11 +66,13 @@ export default {
           
         } else {
           this.error = "Credenciales incorrectas (No llegó el token)";
+          this.$emit('mostrar-alerta', 'Credenciales incorrectas', 'error');
         }
 
       } catch (e) {
         console.error(e);
         this.error = "Error al conectar con el servidor o credenciales inválidas.";
+        this.$emit('mostrar-alerta', 'Error al conectar con el servidor o credenciales inválidas', 'error');
       } finally {
         this.cargando = false;
       }

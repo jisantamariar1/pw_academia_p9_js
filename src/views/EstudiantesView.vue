@@ -27,29 +27,45 @@
                     :estudianteEdit="estudianteSeleccionado"
                     @guardado="finalizarOperacion"
                     @cancelar="cerrarFormulario"
+                    @mostrar-alerta="mostrarAlerta"
                 />
             </div>
 
         </div>
+        
+        <!-- AlertaFlash -->
+        <AlertaFlash
+            :mostrar="alerta.mostrar"
+            :mensaje="alerta.mensaje"
+            :tipo="alerta.tipo"
+            @ocultar="ocultarAlerta"
+        />
     </div>
 </template>
 
 <script>
 import EstudianteList from '@/components/EstudianteList.vue';
 import EstudianteForm from '@/components/EstudianteForm.vue';
+import AlertaFlash from '@/components/AlertaFlash.vue';
 import { consultarTodosFachada, borrarFachada } from '@/clients/EstudianteClient.js';
 
 export default {
     components: {
         EstudianteList,
-        EstudianteForm
+        EstudianteForm,
+        AlertaFlash
     },
 
     data() {
         return {
             listaEstudiantes: [],
             mostrarFormulario: false,
-            estudianteSeleccionado: null
+            estudianteSeleccionado: null,
+            alerta: {
+                mostrar: false,
+                mensaje: '',
+                tipo: 'success'
+            }
         }
     },
 
@@ -64,10 +80,19 @@ export default {
         },
 
         async borrarEstudiante(id) {
-            if (confirm("¿Estás seguro de eliminar este estudiante?")) {
-                await borrarFachada(id);
-                await this.cargarEstudiantes();
-            }
+            await borrarFachada(id);
+            await this.cargarEstudiantes();
+            this.mostrarAlerta('Estudiante eliminado correctamente', 'success');
+        },
+
+        mostrarAlerta(mensaje, tipo = 'success') {
+            this.alerta.mostrar = true;
+            this.alerta.mensaje = mensaje;
+            this.alerta.tipo = tipo;
+        },
+
+        ocultarAlerta() {
+            this.alerta.mostrar = false;
         },
 
         irAInscripciones(id) {

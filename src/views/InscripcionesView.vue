@@ -47,6 +47,14 @@
     <div v-else class="loading">
       Cargando datos del estudiante...
     </div>
+    
+    <!-- AlertaFlash -->
+    <AlertaFlash
+      :mostrar="alerta.mostrar"
+      :mensaje="alerta.mensaje"
+      :tipo="alerta.tipo"
+      @ocultar="ocultarAlerta"
+    />
   </div>
 </template>
 
@@ -54,6 +62,7 @@
 // ... (Tu lógica de script se mantiene exactamente igual)
 import InscripcionList from '@/components/InscripcionList.vue';
 import MatriculaForm from '@/components/MatriculaForm.vue';
+import AlertaFlash from '@/components/AlertaFlash.vue';
 import { consultarPorIdFachada } from '@/clients/EstudianteClient.js';
 import { consultarCursosFachada } from '@/clients/CursoClient.js';
 import { 
@@ -63,12 +72,17 @@ import {
 } from '@/clients/InscripcionClient.js';
 
 export default {
-  components: { InscripcionList, MatriculaForm },
+  components: { InscripcionList, MatriculaForm, AlertaFlash },
   data() {
     return {
       estudiante: null,
       inscripciones: [],
-      cursos: []
+      cursos: [],
+      alerta: {
+        mostrar: false,
+        mensaje: '',
+        tipo: 'success'
+      }
     }
   },
   methods: {
@@ -85,19 +99,26 @@ export default {
     async ejecutarMatricula(cursoId) {
       try {
         await matricularFachada(this.estudiante.id, cursoId);
-        alert("¡Matriculación exitosa!");
+        this.mostrarAlerta("¡Matriculación exitosa!", "success");
         await this.cargarTodo();
       } catch (e) {
-        alert("Error: Es posible que no haya cupos o ya estés inscrito.");
+        this.mostrarAlerta("Error: Es posible que no haya cupos o ya estés inscrito.", "error");
       }
     },
     async ejecutarCancelacion(urlHateoas) {
-      if (confirm("¿Seguro que desea cancelar esta matrícula?")) {
-        // Comentario arriba de la línea
-        // Implementación pura de HATEOAS: seguimos el link provisto por el backend
-        await cancelarDesdeLinkFachada(urlHateoas);
-        await this.cargarTodo();
-      }
+      await cancelarDesdeLinkFachada(urlHateoas);
+      await this.cargarTodo();
+      this.mostrarAlerta("Matrícula cancelada correctamente", "success");
+    },
+
+    mostrarAlerta(mensaje, tipo = 'success') {
+      this.alerta.mostrar = true;
+      this.alerta.mensaje = mensaje;
+      this.alerta.tipo = tipo;
+    },
+
+    ocultarAlerta() {
+      this.alerta.mostrar = false;
     }
   },
   mounted() {

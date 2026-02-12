@@ -102,10 +102,10 @@ export default {
 
         if (this.cursoEdit) {
           await actualizarCursoFachada(this.cursoEdit.id, this.curso);
-          alert("Curso actualizado correctamente");
+          this.$emit('mostrar-alerta', 'Curso actualizado correctamente', 'success');
         } else {
           await guardarCursoFachada(this.curso);
-          alert("Curso creado exitosamente");
+          this.$emit('mostrar-alerta', 'Curso creado exitosamente', 'success');
         }
 
         this.$emit('actualizado');
@@ -113,7 +113,7 @@ export default {
 
       } catch (e) {
         console.error("Error al procesar curso", e);
-        alert("Error al procesar el curso. Verifique los datos.");
+        this.$emit('mostrar-alerta', 'Error al procesar el curso. Verifique los datos.', 'error');
       }
     },
 
