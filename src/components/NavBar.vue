@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar">
-    <div class="brand">Academia Pro</div>
+    <div class="brand">Academia De Cursos Grupo 4</div>
     <div class="menu">
       <router-link to="/estudiantes">Estudiantes</router-link> |
       <router-link to="/cursos">Cursos</router-link>
