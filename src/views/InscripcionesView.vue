@@ -59,7 +59,7 @@
 </template>
 
 <script>
-// ... (Tu lógica de script se mantiene exactamente igual)
+
 import InscripcionList from '@/components/InscripcionList.vue';
 import MatriculaForm from '@/components/MatriculaForm.vue';
 import AlertaFlash from '@/components/AlertaFlash.vue';
@@ -88,8 +88,7 @@ export default {
   methods: {
     async cargarTodo() {
       const idEst = this.$route.params.id;
-      // Comentario arriba de la línea
-      // Carga paralela de recursos para mejorar la velocidad
+      // Cargo todo en paralelo para que sea más rápido
       [this.estudiante, this.inscripciones, this.cursos] = await Promise.all([
         consultarPorIdFachada(idEst),
         buscarInscripcionesPorEstudianteFachada(idEst),
@@ -136,8 +135,7 @@ export default {
   border-radius: 12px;
 }
 
-/* Comentario arriba de la línea */
-/* Estilo para el encabezado con navegación */
+/* Encabezado con navegación */
 .header-section {
   display: flex;
   justify-content: space-between;
@@ -160,8 +158,7 @@ export default {
   cursor: pointer;
 }
 
-/* Comentario arriba de la línea */
-/* Tarjeta de información destacada */
+/* Info del estudiante */
 .info-card {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

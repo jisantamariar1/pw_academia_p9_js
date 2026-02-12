@@ -65,8 +65,7 @@
 import { guardarFachada, actualizarFachada } from '@/clients/EstudianteClient.js';
 
 export default {
-  // Props para recibir datos en caso de edición
-  props: ['estudianteEdit'],
+  props: ['estudianteEdit'], // Si viene lleno, es edición
 
   data() {
     return {
@@ -85,7 +84,7 @@ export default {
       try {
 
         if (this.estudianteEdit) {
-          // Usamos el ID que viene de la prop para actualizar
+          // Modo edición
           await actualizarFachada(this.estudianteEdit.id, this.estudiante);
           this.$emit('mostrar-alerta', 'Estudiante actualizado con éxito', 'success');
         } else {
@@ -112,13 +111,13 @@ export default {
     }
   },
 
-  // Si estudianteEdit cambia (al darle editar), cargamos los datos
+  // Cuando cambia estudianteEdit cargo los datos al form
   watch: {
     estudianteEdit: {
       immediate: true,
       handler(newVal) {
         if (newVal) {
-          // Clonamos para evitar modificar directamente la prop
+          // Clono para no modificar la prop directamente
           this.estudiante = { ...newVal };
         } else {
           this.limpiarFormulario();

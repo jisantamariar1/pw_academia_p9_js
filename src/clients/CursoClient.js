@@ -38,8 +38,7 @@ const borrar = async (id) => {
     return data
 }
 
-// Comentario arriba de la línea
-// Fachadas para ser utilizadas en los componentes de Vue
+// Fachadas
 export const consultarCursosFachada = async () => {
     return await consultarTodos();
 }

@@ -39,8 +39,7 @@
 export default {
   props: ['inscripciones'],
   methods: {
-    // Comentario arriba de la línea
-    // Función que extrae el link de cancelación si existe
+    // Busco el link de cancelar en los links HATEOAS
     obtenerLinkCancelar(inscripcion) {
       return inscripcion.links.find(l => l.rel === 'cancelar-inscripcion');
     }

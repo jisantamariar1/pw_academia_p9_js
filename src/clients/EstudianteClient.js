@@ -19,8 +19,7 @@ const guardar = async (body) => {
     return data
 }
 
-// Comentario arriba de la línea
-// Corregido: El orden ahora es (id, body) para coincidir con la fachada
+
 const actualizar = async (id, body) => {
     const token = localStorage.getItem('token')
     const data = await axios.put(`${baseURL}/${id}`, body, { headers: { Authorization: `Bearer ${token}` } }).then(r => r.data)

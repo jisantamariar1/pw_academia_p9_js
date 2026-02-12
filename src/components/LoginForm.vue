@@ -53,15 +53,14 @@ export default {
       this.error = null;
 
       try {
-        // 1. Llamamos al backend 
         const token = await obtenerTokenFachada(this.usuario, this.password);
         
         if (token) {
-          // 2. Guardamos el token y el nombre de usuario en el navegador
+          // Guardo el token y usuario en localStorage
           localStorage.setItem('token', token.accessToken);
           localStorage.setItem('user', this.usuario);
           
-          // 3. Emitimos un evento para avisar que ya entramos
+          // Aviso al padre que el login fue exitoso
           this.$emit('login-exitoso');
           
         } else {

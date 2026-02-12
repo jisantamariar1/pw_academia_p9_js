@@ -21,7 +21,7 @@ const routes = [
     component: CursosView
   },
   {
-    path: '/inscripcion/:id', // Agregamos :id para capturar el parámetro
+    path: '/inscripcion/:id', // El :id es para el estudiante
     name: 'inscripcion',
     component: InscripcionesView
   }

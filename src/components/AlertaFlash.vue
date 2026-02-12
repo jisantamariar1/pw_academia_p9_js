@@ -9,25 +9,23 @@
 
 <script>
 export default {
-  // Recibimos la información desde el padre
   props: {
     mostrar: Boolean,
     mensaje: String,
-    tipo: String // 'success' o 'error'
+    tipo: String // success o error
   },
   methods: {
     cerrar() {
-      // Avisamos al padre que cambie la variable 'mostrar' a false
       this.$emit('ocultar');
     }
   },
-  // Usamos watch para activar el temporizador cuando 'mostrar' cambie a true
+  // Auto-cierre después de 3 segundos
   watch: {
     mostrar(nuevoValor) {
       if (nuevoValor) {
         setTimeout(() => {
           this.cerrar();
-        }, 3000); // Se cierra solo a los 3 segundos
+        }, 3000);
       }
     }
   }

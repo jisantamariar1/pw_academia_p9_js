@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     irAlHome() {
-      // Redirigir al usuario al Dashboard principal
+      // Lo mando a estudiantes después del login
       this.$router.push('/estudiantes');
     },
     

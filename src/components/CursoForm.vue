@@ -97,7 +97,7 @@ export default {
     async enviar() {
       try {
 
-        // Sincronizar estado automáticamente según cupos
+        // Si no hay cupos, cierro el curso
         this.curso.estado = this.curso.cupos === 0 ? 'CERRADO' : 'ABIERTO';
 
         if (this.cursoEdit) {
